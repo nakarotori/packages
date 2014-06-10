@@ -24,7 +24,6 @@ PKG_MD5SUM:=b72d058c4ebc7b62dba68f93da358bfa
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
-ICONV_FULL:=1
 
 define Package/dosfstools/Default
   SECTION:=utils
@@ -64,7 +63,8 @@ define Package/mkdosfs/description
 	(mkfs.vfat and mkfs.fat for creating FAT volumes)
 endef
 
-LDFLAGS+=$(ICONV_LDFLAGS) $(TARGET_LDFLAGS) -L$(STAGING_DIR)/usr/lib/libiconv-full/lib -liconv
+LDFLAGS+=$(ICONV_LDFLAGS)
+LDLIBS+=-liconv
 
 define Build/Configure
 endef
@@ -76,6 +76,7 @@ define Build/Compile
 		PREFIX="/usr" \
 		SBINDIR="/usr/sbin" \
 		LDFLAGS="$(LDFLAGS)" \
+		LDLIBS="$(LDLIBS)" \
 		all
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 		$(TARGET_CONFIGURE_OPTS) \
