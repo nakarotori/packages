@@ -1,3 +1,4 @@
+
 #
 # Copyright (C) 2006-2012 OpenWrt.org
 #
@@ -8,13 +9,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dosfstools
-PKG_VERSION:=3.0.25
+PKG_VERSION:=3.0.26
 PKG_RELEASE:=1
+
+PKG_LICENSE:=GPL-3.0+
+PKG_LICENSE_FILES:=COPYING
+
+PKG_MAINTAINER:=Dirk Neukirchen <dirkneukirchen@web.de>
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://daniel-baumann.ch/files/software/dosfstools \
 		http://fossies.org/linux/misc
-PKG_MD5SUM:=bd73002ace02d8e6cfc7c4696b8098e9
+PKG_MD5SUM:=b72d058c4ebc7b62dba68f93da358bfa
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
