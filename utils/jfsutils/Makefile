@@ -9,11 +9,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=jfsutils
 PKG_VERSION:=1.1.15
-PKG_MD5SUM:=8809465cd48a202895bc2a12e1923b5d
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://jfs.sourceforge.net/project/pub
+PKG_MD5SUM:=8809465cd48a202895bc2a12e1923b5d
+
+PKG_LICENSE:=GPL-2.0
+
+PKG_MAINTAINER:=Dirk Neukirchen <dirkneukirchen@web.de>
 
 include $(INCLUDE_DIR)/package.mk
 
