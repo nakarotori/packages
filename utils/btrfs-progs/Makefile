@@ -8,15 +8,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=btrfs-progs
-PKG_VERSION:=0.19
+PKG_VERSION:=v3.14.2
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://www.kernel.org/pub/linux/kernel/people/mason/btrfs/
-PKG_MD5SUM:=69e29ecd922e3f9dcb74a3a8f80b4f68
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=git://git.kernel.org/pub/scm/linux/kernel/git/mason/btrfs-progs.git
+PKG_SOURCE_VERSION:=24cf4d8c3ee924b474f68514e0167cc2e602a48d
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
+PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -24,7 +27,7 @@ define Package/btrfs-progs
   SECTION:=utils
   CATEGORY:=Utilities
   SUBMENU:=Filesystem
-  DEPENDS:=+libuuid +zlib
+  DEPENDS:=+libacl +libattr +libblkid +libuuid +liblzo +libpthread +zlib
   TITLE:=Btrfs filesystems utilities
   URL:=http://btrfs.wiki.kernel.org/
 endef
@@ -36,7 +39,8 @@ define Package/btrfs-progs/description
  GPL and open for contribution from anyone.
 endef
 
-progs = btrfsctl mkfs.btrfs btrfs-debug-tree btrfs-show btrfs-vol btrfsck
+progs = btrfs btrfs-image btrfs-debug-tree btrfs-find-root btrfs-show-super btrfs-zero-log \
+	fsck.btrfs mkfs.btrfs
 
 MAKE_FLAGS+=\
 	CC="$(TARGET_CC)" \
