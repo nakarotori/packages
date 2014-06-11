@@ -1,0 +1,20 @@
+--- a/Makefile
++++ b/Makefile
+@@ -47,7 +47,7 @@ endif
+ MAKEOPTS = --no-print-directory Q=$(Q)
+ 
+ progs = mkfs.btrfs btrfs-debug-tree btrfsck \
+-	btrfs btrfs-map-logical btrfs-image btrfs-zero-log btrfs-convert \
++	btrfs btrfs-map-logical btrfs-image btrfs-zero-log \
+ 	btrfs-find-root btrfstune btrfs-show-super
+ 
+ # external libs required by various binaries; for btrfs-foo,
+@@ -227,7 +227,7 @@ clean-all: clean-doc clean
+ 
+ clean: $(CLEANDIRS)
+ 	@echo "Cleaning"
+-	$(Q)rm -f $(progs) cscope.out *.o *.o.d btrfs-convert btrfs-image btrfs-select-super \
++	$(Q)rm -f $(progs) cscope.out *.o *.o.d btrfs-image btrfs-select-super \
+ 	      btrfs-zero-log btrfstune dir-test ioctl-test quick-test send-test btrfsck \
+ 	      btrfs.static mkfs.btrfs.static btrfs-calc-size \
+ 	      version.h $(check_defs) \
