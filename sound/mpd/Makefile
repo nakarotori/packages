@@ -11,7 +11,7 @@ PKG_NAME:=mpd
 PKG_VERSION:=0.18.11
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.18/
 PKG_MD5SUM:=be23120f342250e8352f6499cb960fd2
 
@@ -21,6 +21,7 @@ PKG_BUILD_PARALLEL:=1
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_IPV6 \
 
+PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -49,7 +50,7 @@ $(call Package/mpd/Default)
   DEPENDS+= \
 	+AUDIO_SUPPORT:alsa-lib \
 	+libaudiofile +BUILD_PATENTED:libfaad2 +libffmpeg +libid3tag \
-	+libmms +libogg +libsndfile +libvorbis
+	+libmms +libogg +libopus +libsndfile +libvorbis
   PROVIDES:=mpd
   VARIANT:=full
 endef
@@ -154,6 +155,7 @@ ifeq ($(BUILD_VARIANT),full)
 	--enable-lastfm \
 	--enable-mms \
 	--enable-oggflac \
+	--enable-opus \
 	--enable-pipe-output \
 	--enable-recorder-output \
 	--disable-shout \
@@ -167,7 +169,6 @@ endif
 
 ifeq ($(BUILD_VARIANT),mini)
 
-  # oggflac is not compatible with tremor
   CONFIGURE_ARGS += \
 	--disable-aac \
 	--disable-alsa \
@@ -185,6 +186,7 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-vorbis \
 	--disable-vorbis-encoder \
 	--with-tremor=yes \
+	--disable-opus
 
 endif
 
