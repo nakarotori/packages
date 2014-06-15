@@ -8,13 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mpd
-PKG_VERSION:=0.17.6
-PKG_RELEASE:=4
+PKG_VERSION:=0.18.11
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.17/
-PKG_MD5SUM:=0a42ed81ff298c12e22c16be31097e4c
-PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
+PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.18/
+PKG_MD5SUM:=be23120f342250e8352f6499cb960fd2
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_PARALLEL:=1
@@ -43,6 +42,7 @@ define Package/mpd/Default/description
  gmpc (gnome), phpmp (php), etc...
 endef
 
+
 define Package/mpd-full
 $(call Package/mpd/Default)
   TITLE+= (full)
@@ -64,6 +64,7 @@ define Package/mpd-full/conffiles
 /etc/avahi/services/mpd.service
 /etc/mpd.conf
 endef
+
 
 define Package/mpd-mini
 $(call Package/mpd/Default)
@@ -139,6 +140,7 @@ TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib $(if $(ICONV_FULL),-lic
 
 # use gcc instead of g++ to avoid unnecessary linking against libstdc++
 TARGET_CXX:=$(TARGET_CC)
+
 
 ifeq ($(BUILD_VARIANT),full)
 
