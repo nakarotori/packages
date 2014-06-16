@@ -179,6 +179,7 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-lastfm \
 	--disable-mms \
 	--disable-oggflac \
+	--disable-opus \
 	--disable-pipe-output \
 	--disable-recorder-output \
 	--disable-shout \
@@ -186,7 +187,6 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-vorbis \
 	--disable-vorbis-encoder \
 	--with-tremor=yes \
-	--disable-opus
 
 endif
 
