@@ -193,6 +193,7 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-lastfm \
 	--disable-mms \
 	--disable-oggflac \
+	--disable-opus \
 	--disable-pipe-output \
 	--disable-recorder-output \
 	--disable-shout \
