@@ -55,7 +55,7 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(SED) 's|/usr/include|$(STAGING_DIR)/usr/include|' \
 		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig/shout.pc
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/shout.pc $(1)/usr/lib/pkgconfig/		
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/shout.pc $(1)/usr/lib/pkgconfig/
 endef
 
 define Package/libshout/install
