@@ -190,8 +190,6 @@ CONFIGURE_VARS += \
 #TARGET_CFLAGS += -std=c99
 ## some optimization like -Os, -O2 breaks at least for target x86 so deactivate
 TARGET_CXXFLAGS += -O0
-TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
-
 
 ifeq ($(BUILD_VARIANT),full)
 
@@ -245,6 +243,7 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-recorder-output \
 	--disable-shout \
 	--disable-sndfile \
+	--disable-sqlite \
 	--disable-vorbis \
 	--disable-vorbis-encoder \
 	--with-tremor=yes \
