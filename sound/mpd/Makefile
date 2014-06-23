@@ -15,6 +15,8 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.18/
 PKG_MD5SUM:=be23120f342250e8352f6499cb960fd2
 
+
+
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_PARALLEL:=1
 
@@ -32,7 +34,7 @@ define Package/mpd/Default
   CATEGORY:=Sound
   TITLE:=Music Player Daemon
   URL:=http://www.musicpd.org/
-  DEPENDS:= +glib2 +libcurl +libpthread $(ICONV_DEPENDS) \
+  DEPENDS:= +glib2 +libcurl +libstdcpp +libpthread $(ICONV_DEPENDS) \
 	    +libflac +BUILD_PATENTED:libmad +libvorbisidec
 endef
 
@@ -50,7 +52,8 @@ $(call Package/mpd/Default)
   DEPENDS+= \
 	+AUDIO_SUPPORT:alsa-lib \
 	+libaudiofile +BUILD_PATENTED:libfaad2 +libffmpeg +libid3tag \
-	+libmms +libogg +libopus +libsndfile +libvorbis
+	+libmms +libogg +libopus +libshout +libsndfile +libvorbis +libmpdclient \
+	+libsqlite3
   PROVIDES:=mpd
   VARIANT:=full
 endef
@@ -142,6 +145,53 @@ TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib $(if $(ICONV_FULL),-lic
 # use gcc instead of g++ to avoid unnecessary linking against libstdc++
 TARGET_CXX:=$(TARGET_CC)
 
+CONFIGURE_ARGS += \
+	$(call autoconf_bool,CONFIG_IPV6,ipv6) \
+	--disable-documentation \
+	--enable-debug \
+	--disable-test \
+	--disable-werror \
+	\
+	--disable-ao \
+	--disable-bzip2 \
+	--disable-fluidsynth \
+	--disable-gme \
+	--disable-iso9660 \
+	--disable-jack \
+	--disable-lame-encoder \
+	--disable-libwrap \
+	--disable-lsr \
+	--disable-mikmod \
+	--disable-modplug \
+	--disable-mpc \
+	--disable-mpg123 \
+	--disable-openal \
+	--disable-sidplay \
+	--disable-solaris-output \
+	--disable-twolame-encoder \
+	--disable-wave-encoder \
+	--disable-wavpack \
+	--disable-wildmidi \
+	--disable-zzip \
+	--with-zeroconf=no \
+	\
+	--enable-curl \
+	--enable-flac \
+	--enable-httpd-output \
+	--enable-tcp \
+	--enable-un \
+
+CONFIGURE_VARS += \
+	FLAC_CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include/FLAC" \
+	FLAC_LIBS="$(TARGET_LDFLAGS) -lFLAC" \
+	$(if $(CONFIG_BUILD_PATENTED),MAD_CFLAGS="$(TARGET_CFLAGS)") \
+	$(if $(CONFIG_BUILD_PATENTED),MAD_LIBS="$(TARGET_LDFLAGS) -lmad") \
+
+#TARGET_CFLAGS += -std=c99
+## some optimization like -Os, -O2 breaks at least for target x86 so deactivate
+TARGET_CXXFLAGS += -O0
+TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
+
 
 ifeq ($(BUILD_VARIANT),full)
 
@@ -164,11 +214,22 @@ ifeq ($(BUILD_VARIANT),full)
 	--disable-vorbis-encoder \
 	--with-faad="$(STAGING_DIR)/usr" \
 	--with-tremor=yes \
+	--enable-aac \
+	--enable-alsa \
+	--enable-opus
+	--enable-ffmpeg \
+	--enable-id3 \
+	--enable-mms \
+	--enable-shout \
+	--enable-vorbis \
+	--enable-vorbis-encoder \
+	--with-tremor=no \
 
 endif
 
 ifeq ($(BUILD_VARIANT),mini)
 
+  # oggflac is not compatible with tremor
   CONFIGURE_ARGS += \
 	--disable-aac \
 	--disable-alsa \

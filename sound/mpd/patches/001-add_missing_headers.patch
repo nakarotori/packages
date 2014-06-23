@@ -1,0 +1,41 @@
+--- a/src/playlist/PlsPlaylistPlugin.cxx
++++ b/src/playlist/PlsPlaylistPlugin.cxx
+@@ -31,6 +31,7 @@
+ #include <glib.h>
+ 
+ #include <string>
++#include <cstdio>
+ 
+ static constexpr Domain pls_domain("pls");
+ 
+--- a/src/decoder/AudiofileDecoderPlugin.cxx
++++ b/src/decoder/AudiofileDecoderPlugin.cxx
+@@ -32,6 +32,8 @@
+ 
+ #include <assert.h>
+ 
++#include <cstdio>
++
+ /* pick 1020 since its devisible for 8,16,24, and 32-bit audio */
+ #define CHUNK_SIZE		1020
+ 
+--- a/src/output/HttpdClient.cxx
++++ b/src/output/HttpdClient.cxx
+@@ -30,6 +30,7 @@
+ 
+ #include <assert.h>
+ #include <string.h>
++#include <stdio.h>
+ 
+ HttpdClient::~HttpdClient()
+ {
+--- a/src/decoder/OpusDecoderPlugin.cxx
++++ b/src/decoder/OpusDecoderPlugin.cxx
+@@ -40,6 +40,7 @@
+ #include <glib.h>
+ 
+ #include <string.h>
++#include <stdio.h> #SEEK
+ 
+ static constexpr opus_int32 opus_sample_rate = 48000;
+ 
