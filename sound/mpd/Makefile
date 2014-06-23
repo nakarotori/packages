@@ -52,7 +52,7 @@ $(call Package/mpd/Default)
   DEPENDS+= \
 	+AUDIO_SUPPORT:alsa-lib \
 	+libaudiofile +BUILD_PATENTED:libfaad2 +libffmpeg +libid3tag \
-	+libmms +libogg +libopus +libshout +libsndfile +libvorbis +libmpdclient \
+	+libmms +libogg +libopus +libshout +libsndfile +libvorbis \
 	+libsqlite3
   PROVIDES:=mpd
   VARIANT:=full
@@ -62,6 +62,7 @@ define Package/mpd-full/description
 $(call Package/mpd/Default/description)
  .
  This package contains a full-blown Music Player Daemon.
+ Missing are db plugin:proxy (libmpdclient)
 endef
 
 define Package/mpd-full/conffiles
@@ -73,6 +74,7 @@ endef
 define Package/mpd-mini
 $(call Package/mpd/Default)
   TITLE+= (mini)
+  DEPENDS+=+libvorbisidec
   PROVIDES:=mpd
   VARIANT:=mini
 endef
@@ -151,28 +153,37 @@ CONFIGURE_ARGS += \
 	--enable-debug \
 	--disable-test \
 	--disable-werror \
-	\
-	--disable-ao \
+	--disable-libmpdclient \
+	 \
 	--disable-bzip2 \
+	--disable-iso9660 \
+	--disable-zzip \
+	 \
+	--disable-despotify \
 	--disable-fluidsynth \
 	--disable-gme \
-	--disable-iso9660 \
-	--disable-jack \
-	--disable-lame-encoder \
-	--disable-libwrap \
-	--disable-lsr \
 	--disable-mikmod \
-	--disable-modplug \
 	--disable-mpc \
 	--disable-mpg123 \
-	--disable-openal \
+	--disable-modplug \
 	--disable-sidplay \
-	--disable-solaris-output \
-	--disable-twolame-encoder \
-	--disable-wave-encoder \
+	--disable-soundcloud \
 	--disable-wavpack \
 	--disable-wildmidi \
-	--disable-zzip \
+	 \
+	--disable-ao \
+	--disable-jack \
+	--disable-openal \
+	--disable-osx \
+	--disable-solaris-output \
+	 \
+	--disable-lame-encoder \
+	--disable-twolame-encoder \
+	--disable-wave-encoder \
+	 \
+	--disable-libwrap \
+	 \
+	--disable-lsr \
 	--with-zeroconf=no \
 	\
 	--enable-curl \
@@ -216,6 +227,7 @@ ifeq ($(BUILD_VARIANT),full)
 	--enable-alsa \
 	--enable-opus
 	--enable-ffmpeg \
+	\
 	--enable-id3 \
 	--enable-mms \
 	--enable-shout \
@@ -227,7 +239,6 @@ endif
 
 ifeq ($(BUILD_VARIANT),mini)
 
-  # oggflac is not compatible with tremor
   CONFIGURE_ARGS += \
 	--disable-aac \
 	--disable-alsa \
@@ -235,7 +246,6 @@ ifeq ($(BUILD_VARIANT),mini)
 	--disable-fifo \
 	--disable-ffmpeg \
 	--disable-id3 \
-	--disable-lastfm \
 	--disable-mms \
 	--disable-oggflac \
 	--disable-opus \
