@@ -16,8 +16,9 @@ PKG_SOURCE_URL:=http://jfs.sourceforge.net/project/pub
 PKG_MD5SUM:=8809465cd48a202895bc2a12e1923b5d
 
 PKG_LICENSE:=GPL-2.0
-
 PKG_MAINTAINER:=Dirk Neukirchen <dirkneukirchen@web.de>
+
+PKG_CHECK_FORMAT_SECURITY:=0
 
 include $(INCLUDE_DIR)/package.mk
 
