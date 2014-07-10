@@ -43,6 +43,11 @@ define Host/Compile
 endef
 
 define Host/Install
+	$(INSTALL_DIR) $(STAGING_DIR_HOST)/usr/bin
+	$(CP) $(HOST_BUILD_DIR)/src/.libs/protoc $(STAGING_DIR_HOST)/usr/bin/
+	$(INSTALL_DIR) $(STAGING_DIR_HOST)/usr/lib
+	$(CP) $(HOST_BUILD_DIR)/src/.libs/libprotobuf* $(STAGING_DIR_HOST)/usr/lib/
+	$(CP) $(HOST_BUILD_DIR)/src/.libs/libprotoc* $(STAGING_DIR_HOST)/usr/lib/
 endef
 
 CONFIGURE_ARGS += --with-protoc=$(HOST_BUILD_DIR)/src/protoc
