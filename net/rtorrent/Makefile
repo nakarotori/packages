@@ -69,6 +69,9 @@ endef
 
 TARGET_LDFLAGS += -lz -lpthread -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
+CONFIGURE_VARS+= \
+	LIBS="-lz" \
+
 CONFIGURE_ARGS+= \
 	--enable-shared \
 	--disable-static \
