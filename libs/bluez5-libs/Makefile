@@ -24,7 +24,7 @@ define Package/bluez5
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=Bluetooth library
-  DEPENDS:=+glib2 +dbus +udev +libncurses +libreadline
+  DEPENDS:=+glib2 +dbus +udev +libical +libncurses +libreadline
   URL:=http://www.bluez.org/
 endef
 # libreadline undef termcap symbols on debian7
