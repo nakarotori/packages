@@ -1,19 +1,21 @@
 #
-# Copyright (C) 2006-2010 OpenWrt.org
+# Copyright (C) 2006-2014 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
+# Contributors:   nakarotori & construct.io
+#
+
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=bluez
-PKG_VERSION:=5.21
-PKG_RELEASE:=5
+PKG_VERSION:=5.24
+PKG_RELEASE:=6
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.kernel.org/pub/linux/bluetooth
-#PKG_MD5SUM:=8c2ca546c0e7bb73dbd0e906fce7f6b1
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -27,8 +29,6 @@ define Package/bluez5
   DEPENDS:=+glib2 +dbus +udev +libical +libncurses +libreadline
   URL:=http://www.bluez.org/
 endef
-# libreadline undef termcap symbols on debian7
-# libncurses for termcap ?
 
 CONFIGURE_ARGS += \
 		--prefix=$(1)/usr \
@@ -37,7 +37,6 @@ CONFIGURE_ARGS += \
 		--enable-sixaxis \
 		--enable-library \
 		--disable-systemd \
-	#	--static-libs \
 
 TARGET_CFLAGS += $(FPIC)
 
